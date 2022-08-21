@@ -61,6 +61,7 @@ public static class ObjectABTester
         {
             return new ABTestResult<TInput, TResult>()
             {
+                MismatchType = mismatchType,
                 Input = methodParam,
                 ResultA = resultA,
                 ResultB = resultB,

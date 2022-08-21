@@ -48,7 +48,7 @@ public class Tests
         Randomizer.Seed = new Random(8675309);
 
         var testImportCampaignsGen = new Faker<ImportCampaign>()
-            .RuleFor(ic => ic.Type, f => f.PickRandom<ImportCampaignType>().OrNull(f, 0.8f));
+            .RuleFor(ic => ic.Type, f => f.PickRandom<ImportCampaignType>().OrNull(f, 0.2f));
         var testCampaignsGen = new Faker<Campaign>()
             .RuleFor(c => c.ServerId, f => f.Random.Long(-1, 2))
             .RuleFor(ic => ic.CampaignType, f => f.PickRandom<CampaignType>());
