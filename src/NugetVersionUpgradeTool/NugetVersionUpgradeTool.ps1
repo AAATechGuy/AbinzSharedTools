@@ -181,7 +181,7 @@ function _MergeToPackageConfig ($path, [hashtable]$updates, [bool]$verboseLoggin
   $anyUpdate = $false;
 
   $result = Get-Content $path | %{ 
-    $matchResult = ($_ -match 'PackageReference.+Update="([a-zA-Z0-9\.]+)".+Version="([a-zA-Z0-9\.]+)"');
+    $matchResult = ($_ -match 'PackageReference.+Update="([a-zA-Z0-9\.]+)".+Version="([a-zA-Z0-9\-\.]+)"');
     if($matchResult -and $Matches[1] -and $Matches[2]) {
       $packageId = $Matches[1];
       $packageVersion = $Matches[2];
