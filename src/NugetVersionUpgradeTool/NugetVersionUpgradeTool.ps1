@@ -40,9 +40,9 @@ function _GetPackageDependencies ($packageId, $packageVersion, $depth, [string]$
   try
   {
     if($NugetRepository) {
-        $package = (Find-Module -Name $packageId -MinimumVersion $packageVersion -Repository $NugetRepository -ErrorAction Stop);
+        $package = (Find-Module -Name $packageId -RequiredVersion $packageVersion -Repository $NugetRepository -ErrorAction Stop);
     } else {
-        $package = (Find-Module -Name $packageId -MinimumVersion $packageVersion -ErrorAction Stop);
+        $package = (Find-Module -Name $packageId -RequiredVersion $packageVersion -ErrorAction Stop);
     }
     $package.Dependencies | %{ _ToPackageObject $_.Name $_.MinimumVersion $depth; } ;
   } catch {
