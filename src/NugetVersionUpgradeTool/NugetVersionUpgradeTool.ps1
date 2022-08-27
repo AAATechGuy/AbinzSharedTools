@@ -215,6 +215,7 @@ function UpgradePackageConfig(
     [string]$NugetRepository = $null,
     ### enable verbose logging.
     [bool]$VerboseLogging = $true,
+    ### cache for testing
     [bool]$UseGlobalNuGetDependencyCache = $false) 
 {
 <#
