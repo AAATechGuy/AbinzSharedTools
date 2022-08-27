@@ -214,7 +214,8 @@ function UpgradePackageConfig(
     ### Nuget-Repository-Id. Create e.g., Install-Module PackageManagement -Force; Install-Module PowerShellGet -Force; Register-PsRepository 'BingAdsPackages' -SourceLocation 'https://pkgs.dev.azure.com/msasg/_packaging/BingAdsPackages/nuget/v2';
     [string]$NugetRepository = $null,
     ### enable verbose logging.
-    [bool]$VerboseLogging = $true) 
+    [bool]$VerboseLogging = $true,
+    [bool]$UseGlobalNuGetDependencyCache = $false) 
 {
 <#
 .SYNOPSIS
@@ -222,6 +223,12 @@ Upgrades global Packages.props file.
 .LINK
 https://github.com/AAATechGuy/AbinzSharedTools 
 #>
-    $deps = _GetTransitiveDependencies $packageIdVersionPairsToUpdate -verboseLogging $verboseLogging -NugetRepository $NugetRepository -ErrorAction Stop;
+    if($UseGlobalNuGetDependencyCache -and $global:GLOBAL_NUGET_DEPENDENCY_CACHE) {
+      [hashtable]$deps = $global:GLOBAL_NUGET_DEPENDENCY_CACHE;
+    } 
+    if(!$deps) {
+      $deps = _GetTransitiveDependencies $packageIdVersionPairsToUpdate -verboseLogging $verboseLogging -NugetRepository $NugetRepository -ErrorAction Stop;
+    }
     _UpgradePackageConfig -path $path -packageIdVersionHashtableToUpdate $deps -verboseLogging $verboseLogging -ErrorAction Stop;
+    $global:GLOBAL_NUGET_DEPENDENCY_CACHE = $deps;
 }
